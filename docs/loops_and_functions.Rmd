@@ -7,5 +7,107 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
 ```
+
+### Part 1: For Loops
+
+## Task 1
+
+```{r}
+
+weekdays <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+
+transects <- c("Transect A", "Transect B", "Transect C")
+
+weekday_matrix <- matrix(nrow = length(weekdays), ncol = length(transects))
+
+for (i in seq_along(transects)) {
+  for (j in seq_along(weekdays)) {
+    task <- (paste(weekdays[j],"-", transects[i]))
+    weekday_matrix[j, i] <- task
+  }
+}
+
+weekday_matrix
+```
+
+### Part 2: Putting the **Fun** in *fun*ctions
+
+## Task 2
+
+Write a function called `force` that calculates (in Newtons) given inputs of mass (in kg) and acceleration (in m/s\^2) and returns a statement.
+
+```{r}
+
+Calc_Force <- function(m, a) {
+  paste("The resulting force is", m*a, "Newtons")
+}
+
+#make sure it works
+
+Calc_Force(m = 10, a = 5)
+
+```
+
+## Task 3
+
+Recreate fish data frame
+
+```{r}
+
+sci_name <- c("Chanos chanos", "Sphyraena barracuda", "Caranx ignobilis")
+common_name <- c("Milkfish", "Great barracuda", "Giant trevally")
+a_est <- c(0.0905, 0.0181, 0.0353)
+b_est <- c(2.52, 3.27, 3.05)
+
+fish_parms <- data.frame(sci_name, common_name, a_est, b_est)
+
+
+```
+
+```{r}
+
+fish_weight <- function(name, L) {
+  temp_var <- filter(fish_parms, common_name == name)
+  print(temp_var$a_est*L^temp_var$b_est)
+}
+
+```
+
+```{r}
+fish_weight("Milkfish", 10)
+
+```
+
+```{r}
+
+fish_lengths <- seq(from = 0, to = 100, by = 1)
+
+milkfish_weights <- fish_weight(name = "Milkfish", L = fish_lengths)
+
+
+```
+
+## Task 4
+
+Wave power function:
+
+```{r}
+
+wave_power <- function(H, period) {
+  0.5 * H^2 * period
+}
+
+wave_heights <- seq(from = 0, to = 3, by = 0.2)
+
+wave_power(H = wave_heights, period = 8)
+
+```
+
+
+
+
+
 
